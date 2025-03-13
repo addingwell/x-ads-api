@@ -385,7 +385,7 @@ if (data.serverEventDataList) {
   
 }
 
-if (requestBody.conversions[0].identifiers.length > 1 && data.eventId) {
+if (requestBody.conversions[0].identifiers.length > 1) {
  
 sendHttpRequest(
   'https://' + host + '/transformer/twitter/authorization-ads-api',
@@ -444,18 +444,8 @@ sendHttpRequest(
 
 function sendPixelRequest() {
   
-  const eventId = eventData.event_name == "page_view" ? (data.eventId || data.pixelId) : data.eventId;
+  const eventId = data.eventId;
   const body = requestBody.conversions[0];
-  
-  let txn_id = eventId;
-  let eci;
-  
-  if(!data.eventId) {
-    eci = '3';
-  } else {
-    txn_id = data.eventId;
-    eci = '4';
-  }
   
   let email;
   let phone_number;
@@ -473,7 +463,7 @@ function sendPixelRequest() {
   
   let urlParams = [
         ['bci', '4'],
-        ['eci', eci],
+        ['eci', '4'],
         ['email_address', email],
         ['event', JSON.stringify({ value: body.value, currency: body.price_currency, conversion_id: body.conversion_id || generateConversionId(), contents: body.contents, search_string: body.search_string })],
         ['event_id', generateUUID()],
@@ -487,7 +477,7 @@ function sendPixelRequest() {
         ['tw_document_href', eventData.page_location],
         ['tw_iframe_status', '0'],
         ['twclid', twclid],
-        ['txn_id', enc(txn_id)],
+        ['txn_id', enc(eventId)],
         ['type', 'javascript'],
         ['version', '2.3.31']
       ];
