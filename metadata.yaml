@@ -1,4 +1,6 @@
 homepage: "https://addingwell.com"
 versions:
+  - sha: 056ba626134987e0c45ee8c18f5feb43db79334f
+    changeNotes: Make Event ID required
   - sha: 7cada7824a4237ca769572c83d1a0dde91cdc268
     changeNotes: Initial release.
